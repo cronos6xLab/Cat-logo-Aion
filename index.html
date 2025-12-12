@@ -1,463 +1,475 @@
+> Orlando:
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Perfumes - Modo Oscuro</title>
+    <title>Tabla de Perfumes Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #8a6d3b;
+            --secondary-color: #d4af37;
+            --accent-color: #f5e7d3;
+            --text-light: #333333;
+            --text-dark: #f5f5f5;
+            --bg-light: #ffffff;
+            --bg-dark: #1a1a1a;
+            --header-bg-light: linear-gradient(135deg, #f5e7d3 0%, #e8d9c5 100%);
+            --header-bg-dark: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
+            --row-light: #ffffff;
+            --row-alt-light: #f9f5f0;
+            --row-dark: #2a2a2a;
+            --row-alt-dark: #333333;
+            --border-light: #e0d6c2;
+            --border-dark: #444444;
+            --shadow-light: rgba(138, 109, 59, 0.1);
+            --shadow-dark: rgba(0, 0, 0, 0.3);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background-color: var(--bg-light);
+            color: var(--text-light);
             padding: 20px;
-            color: #e2e8f0;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            color: #f8fafc;
-            margin-bottom: 12px;
-            font-weight: 700;
-            background: linear-gradient(to right, #c4b5fd, #7dd3fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .subtitle {
-            font-size: 1.1rem;
-            color: #94a3b8;
-            max-width: 600px;
-            margin: 0 auto;
             line-height: 1.6;
         }
-        
-        /* Estilos para la barra de búsqueda */
-        .search-container {
-            margin-bottom: 30px;
-            width: 100%;
+
+        .dark-mode {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
         }
-        
-        .search-label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 10px;
-            color: #f8fafc;
-            font-size: 1.1rem;
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
-        
-        .essence-search {
-            width: 100%;
-            padding: 14px 16px;
-            font-size: 16px;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            background-color: #1e293b;
-            color: #e2e8f0;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        .essence-search:focus {
-            outline: none;
-            border-color: #7dd3fc;
-            box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.2);
-        }
-        
-        .essence-search option {
-            background-color: #1e293b;
-            color: #e2e8f0;
-            padding: 10px;
-        }
-        
-        .table-container {
-            background-color: #1e293b;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-            margin-bottom: 30px;
-            border: 1px solid #334155;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        thead {
-            background: linear-gradient(to right, #475569, #334155);
-        }
-        
-        th, td {
-            padding: 18px 20px;
-            text-align: center;
-            vertical-align: middle;
-        }
-        
-        th {
-            color: #f1f5f9;
-            font-weight: 600;
-            font-size: 16px;
-            letter-spacing: 0.5px;
-        }
-        
-        td {
-            font-size: 15px;
-            border-bottom: 1px solid #334155;
-        }
-        
-        .volumen {
-            font-weight: 600;
-            color: #f8fafc;
-            font-size: 16px;
-        }
-        
-        .concentracion {
-            line-height: 1.5;
-        }
-        
-        .nombre-perfume {
-            font-weight: 600;
-            color: #f8fafc;
-            font-size: 16px;
-        }
-        
-        .tipo-concentracion {
-            color: #94a3b8;
-            font-size: 14px;
-            margin-top: 4px;
-        }
-        
-        .precio {
-            font-weight: 700;
-            color: #7dd3fc;
-            font-size: 18px;
-        }
-        
-        tr:hover {
-            background-color: #2d3748;
-            transition: background-color 0.3s ease;
-        }
-        
-        /* Estilos para diferenciar tipos de perfume */
-        .sensacion-aura {
-            border-left: 5px solid #7dd3fc;
-        }
-        
-        .impacto-radiante {
-            border-left: 5px solid #86efac;
-        }
-        
-        .aura-intensa {
-            border-left: 5px solid #fdba74;
-        }
-        
-        .balsamo-artesanal {
-            border-left: 5px solid #c4b5fd;
-        }
-        
-        .legend {
+
+        .header {
             display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 25px;
-            padding: 15px;
-            background-color: #1e293b;
-            border-radius: 12px;
-            border: 1px solid #334155;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-light);
         }
-        
-        .legend-item {
+
+        .dark-mode .header {
+            border-bottom-color: var(--border-dark);
+        }
+
+        .title {
+            font-size: 2.2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .dark-mode .title {
+            color: var(--secondary-color);
+        }
+
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: var(--secondary-color);
+        }
+
+        .theme-toggle {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 12px 24px;
+            font-size: 1rem;
+            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 8px 15px;
-            border-radius: 8px;
-            background-color: #0f172a;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px var(--shadow-light);
         }
-        
-        .legend-color {
-            width: 16px;
-            height: 16px;
-            border-radius: 3px;
+
+        .dark-mode .theme-toggle {
+            background: var(--secondary-color);
+            color: #333;
+            box-shadow: 0 4px 8px var(--shadow-dark);
         }
-        
-        .legend-text {
-            font-size: 14px;
-            color: #e2e8f0;
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px var(--shadow-light);
         }
-        
+
+        .dark-mode .theme-toggle:hover {
+            box-shadow: 0 6px 12px var(--shadow-dark);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            margin-bottom: 30px;
+        }
+
+        .dark-mode .table-container {
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        thead {
+            background: var(--header-bg-light);
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .dark-mode thead {
+            background: var(--header-bg-dark);
+        }
+
+        th {
+            padding: 18px 15px;
+
+> Orlando:
+text-align: center;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--primary-color);
+            font-size: 1.05rem;
+            position: relative;
+        }
+
+        .dark-mode th {
+            color: var(--secondary-color);
+        }
+
+        th:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 20%;
+            height: 60%;
+            width: 1px;
+            background-color: var(--border-light);
+        }
+
+        .dark-mode th:not(:last-child)::after {
+            background-color: var(--border-dark);
+        }
+
+        td {
+            padding: 16px 15px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .dark-mode td {
+            border-bottom-color: var(--border-dark);
+        }
+
+        tbody tr {
+            background-color: var(--row-light);
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: var(--row-alt-light);
+        }
+
+        .dark-mode tbody tr {
+            background-color: var(--row-dark);
+        }
+
+        .dark-mode tbody tr:nth-child(even) {
+            background-color: var(--row-alt-dark);
+        }
+
+        tbody tr:hover {
+            background-color: var(--accent-color);
+            transform: scale(1.002);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .dark-mode tbody tr:hover {
+            background-color: #3a3a3a;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #fdf6e3 0%, #f9f0d2 100%) !important;
+            font-weight: 600;
+            color: var(--primary-color);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .dark-mode .highlight {
+            background: linear-gradient(135deg, #3a3a3a 0%, #444444 100%) !important;
+            border-left-color: var(--secondary-color);
+        }
+
+        .product-name {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .dark-mode .product-name {
+            color: var(--secondary-color);
+        }
+
+        .concentration {
+            font-size: 0.9rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background-color: rgba(212, 175, 55, 0.1);
+            color: var(--primary-color);
+            display: inline-block;
+        }
+
+        .dark-mode .concentration {
+            background-color: rgba(212, 175, 55, 0.2);
+        }
+
+        .price {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #2e7d32;
+        }
+
+        .dark-mode .price {
+            color: #4caf50;
+        }
+
+        .profit {
+            font-weight: 700;
+            color: #c62828;
+        }
+
+        .dark-mode .profit {
+            color: #ef5350;
+        }
+
         .footer {
             text-align: center;
             margin-top: 40px;
-            color: #64748b;
-            font-size: 14px;
-            padding: 15px;
-            border-top: 1px solid #334155;
-            width: 100%;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-light);
+            color: #666;
+            font-size: 0.9rem;
         }
-        
-        .theme-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: #334155;
-            border: none;
-            color: #e2e8f0;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
+
+        .dark-mode .footer {
+            border-top-color: var(--border-dark);
+            color: #aaa;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
             font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: background-color 0.3s;
+            margin-left: 8px;
+            background-color: var(--secondary-color);
+            color: white;
         }
-        
-        .theme-toggle:hover {
-            background-color: #475569;
-        }
-        
-        /* Responsive */
+
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
+            .container {
+                padding: 10px;
             }
             
-            th, td {
-                padding: 14px 12px;
+            .title {
+                font-size: 1.8rem;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
             }
             
             .table-container {
-                overflow-x: auto;
-            }
-            
-            .theme-toggle {
-                position: relative;
-                top: 0;
-                right: 0;
-                margin-bottom: 20px;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            h1 {
-                font-size: 1.8rem;
+                border-radius: 8px;
             }
             
             th, td {
                 padding: 12px 10px;
-                font-size: 14px;
-            }
-            
-            .nombre-perfume {
-                font-size: 15px;
-            }
-            
-            .precio {
-                font-size: 16px;
-            }
-            
-            .legend {
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
+                font-size: 0.95rem;
             }
         }
     </style>
 </head>
 <body>
-    <button class="theme-toggle" onclick="toggleTheme()">
-        <span>Modo Claro</span>
-    </button>
-    
-    <div class="container">
-        <header>
-            <h1>Catálogo de Perfumes</h1>
-            <p class="subtitle">Descubre nuestra exclusiva colección de fragancias con diferentes concentraciones y tamaños</p>
-        </header>
-        
-        <!-- Barra de búsqueda integrada -->
-        <div class="search-container">
-            <label for="essence_search" class="search-label">
-                Selecciona la esencia que deseas:
-            </label>
-            <select name="properties[Esencia]" id="essence_search" class="essence-search">
-                <option value="">Buscar o seleccionar esencia...</option>
-                <!-- Aquí se insertarán las opciones de esencias -->
-            </select>
+
+> Orlando:
+<div class="container">
+        <div class="header">
+            <h1 class="title">Catálogo de Perfumes <span class="badge">Premium</span></h1>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i> Modo Oscuro
+            </button>
         </div>
         
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
-                        <th>Volumen</th>
+                        <th>Mililitros</th>
+                        <th>Producto</th>
                         <th>Concentración</th>
                         <th>Precio</th>
+                        <th>Costo</th>
+                        <th>Envío</th>
+                        <th>Mi Ganancia</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="sensacion-aura">
-                        <td class="volumen">30 ml</td>
-                        <td class="concentracion">
-                            <div class="nombre-perfume">Sensación Aura</div>
-                            <div class="tipo-concentracion">(Extrait de Parfum 33%)</div>
-                        </td>
-                        <td class="precio">$169</td>
+                    <tr class="highlight">
+                        <td><strong>50 ml</strong></td>
+                        <td class="product-name">Bálsamo Artesanal</td>
+                        <td><span class="concentration">Bálsamo 6%</span></td>
+                        <td class="price">$179</td>
+                        <td>$84.00</td>
+                        <td>$142.00</td>
+                        <td class="profit">$37.50</td>
                     </tr>
-                    <tr class="impacto-radiante">
-                        <td class="volumen">30 ml</td>
-                        <td class="concentracion">
-                            <div class="nombre-perfume">Impacto Radiante</div>
-                            <div class="tipo-concentracion">(Elixir 42%)</div>
-                        </td>
-                        <td class="precio">$209</td>
+                    <tr>
+                        <td>100 ml</td>
+                        <td class="product-name">Sensación Aura</td>
+                        <td><span class="concentration">Perfume 33%</span></td>
+                        <td class="price">$389</td>
+                        <td>$234.00</td>
+                        <td>$311.50</td>
+                        <td class="profit">$77.50</td>
                     </tr>
-                    <tr class="aura-intensa">
-                        <td class="volumen">30 ml</td>
-                        <td class="concentracion">
-                            <div class="nombre-perfume">Aura Intensa</div>
-                            <div class="tipo-concentracion">(Elixir 50%)</div>
-                        </td>
-                        <td class="precio">$249</td>
+                    <tr>
+                        <td>100 ml</td>
+                        <td class="product-name">Impacto Radiante</td>
+                        <td><span class="concentration">Perfume 42%</span></td>
+                        <td class="price">$499</td>
+                        <td>$300.00</td>
+                        <td>$398.00</td>
+                        <td class="profit">$99.50</td>
                     </tr>
-                    <tr class="sensacion-aura">
-                        <td class="volumen">60 ml</td>
-                        <td class="concentracion">
-                            <div class="nombre-perfume">Sensación Aura</div>
-                            <div class="tipo-concentracion">(Extrait de Parfum 33%)</div>
-                        </td>
-                        <td class="precio">$289</td>
+                    <tr>
+                        <td>100 ml</td>
+                        <td class="product-name">Aura Intensa</td>
+                        <td><span class="concentration">Perfume 50%</span></td>
+                        <td class="price">$589</td>
+                        <td>$354.00</td>
+                        <td>$471.00</td>
+                        <td class="profit">$117.50</td>
                     </tr>
-                    <tr class="impacto-radiante">
-                        <td class="volumen">60 ml</td>
-                        <td class="concentracion">
-                            <div class="nombre-perfume">Impacto Radiante</div>
-                            <div class="tipo-concentracion">(Elixir 42%)</div>
-                        </td>
-                        <td class="precio">$369</td>
+                    <tr>
+                        <td>60 ml</td>
+                        <td class="product-name">Sensación Aura</td>
+                        <td><span class="concentration">Perfume 33%</span></td>
+                        <td class="price">$289</td>
+                        <td>$174.00</td>
+                        <td>$231.50</td>
+                        <td class="profit">$57.50</td>
                     </tr>
-                    <tr class="aura-intensa">
-                        <td class="volumen">60 ml</td>
-                        <td class="concentracion">
-                            <div class="nombre-perfume">Aura Intensa</div>
-                            <div class="tipo-concentracion">(Elixir 50%)</div>
-                        </td>
-                        <td class="precio">$439</td>
+                    <tr>
+                        <td>60 ml</td>
+                        <td class="product-name">Impacto Radiante</td>
+                        <td><span class="concentration">Perfume 42%</span></td>
+                        <td class="price">$369</td>
+                        <td>$222.00</td>
+                        <td>$295.00</td>
+                        <td class="profit">$73.50</td>
                     </tr>
-                    <tr class="sensacion-aura">
-                        <td class="volumen">100 ml</td>
-                        <td class="concentracion">
-                            <div class="nombre-perfume">Sensación Aura</div>
-                            <div class="tipo-concentracion">(Extrait de Parfum 33%)</div>
-                        </td>
-                        <td class="precio">$389</td>
+                    <tr>
+                        <td>60 ml</td>
+                        <td class="product-name">Aura Intensa</td>
+                        <td><span class="concentration">Perfume 50%</span></td>
+                        <td class="price">$439</td>
+                        <td>$264.00</td>
+                        <td>$357.00</td>
+                        <td class="profit">$87.50</td>
                     </tr>
-                    <tr class="impacto-radiante">
-                        <td class="volumen">100 ml</td>
-                        <td class="concentracion">
-                            <div class="nombre-perfume">Impacto Radiante</div>
-                            <div class="tipo-concentracion">(Elixir 42%)</div>
-                        </td>
-                        <td class="precio">$499</td>
+                    <tr>
+                        <td>30 ml</td>
+                        <td class="product-name">Sensación Aura</td>
+                        <td><span class="concentration">Perfume 33%</span></td>
+                        <td class="price">$169</td>
+
+> Orlando:
+<td>$102.00</td>
+                        <td>$135.50</td>
+                        <td class="profit">$33.50</td>
                     </tr>
-                    <tr class="aura-intensa">
-                        <td class="volumen">100 ml</td>
-                        <td class="concentracion">
-                            <div class="nombre-perfume">Aura Intensa</div>
-                            <div class="tipo-concentracion">(Elixir 50%)</div>
-                        </td>
-                        <td class="precio">$589</td>
+                    <tr>
+                        <td>30 ml</td>
+                        <td class="product-name">Impacto Radiante</td>
+                        <td><span class="concentration">Perfume 42%</span></td>
+                        <td class="price">$209</td>
+                        <td>$126.00</td>
+                        <td>$167.00</td>
+                        <td class="profit">$41.50</td>
                     </tr>
-                    <tr class="balsamo-artesanal">
-                        <td class="volumen">50 ml</td>
-                        <td class="concentracion">
-                            <div class="nombre-perfume">Bálsamo Artesanal</div>
-                            <div class="tipo-concentracion">(Aura Cálida 6%)</div>
-                        </td>
-                        <td class="precio">$179</td>
+                    <tr>
+                        <td>30 ml</td>
+                        <td class="product-name">Aura Intensa</td>
+                        <td><span class="concentration">Perfume 50%</span></td>
+                        <td class="price">$249</td>
+                        <td>$149.00</td>
+                        <td>$199.00</td>
+                        <td class="profit">$50.00</td>
                     </tr>
                 </tbody>
             </table>
         </div>
         
-        <div class="legend">
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #7dd3fc;"></div>
-                <span class="legend-text">Sensación Aura</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #86efac;"></div>
-                <span class="legend-text">Impacto Radiante</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #fdba74;"></div>
-                <span class="legend-text">Aura Intensa</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #c4b5fd;"></div>
-                <span class="legend-text">Bálsamo Artesanal</span>
-            </div>
-        </div>
-        
         <div class="footer">
-            <p>© 2025 Catálogo de Perfumes | Todos los precios en dólares estadounidenses</p>
+            <p>© 2023 Colección de Perfumes Premium • Todos los derechos reservados</p>
+            <p>Los precios incluyen envío y manejo • Entrega en 3-5 días hábiles</p>
         </div>
     </div>
 
     <script>
-        function toggleTheme() {
-            // Esta función cambiaría entre modo oscuro y claro
-            // En una implementación completa, aquí se cambiarían los estilos
-            alert('En una implementación completa, este botón cambiaría entre modo oscuro y claro');
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const icon = themeToggle.querySelector('i');
+        
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i> Modo Claro';
         }
-
-        // Función para cargar las opciones de esencias
-        function loadEssenceOptions() {
-            const essenceSearch = document.getElementById('essence_search');
-            const essences = [
-                // Aquí se inserta la lista completa de esencias que proporcionaste
-                { value: "C0085", text: "C0085 FIERCE De ABERCROMBIE & FITCH Amaderada Arómática — Caballero" },
-                { value: "C0086", text: "C0086 FIRST INSTINCT BLUE De ABERCROMBIE & FITCH Aromática Fougère — Caballero" },
-                { value: "U0002N", text: "U0002N ACQUA DI PARMA COLONIA De ACQUA DI PARMA Cítrica — Unisex" },
-                // ... (todas las demás opciones)
-                { value: "D0209N", text: "D0209N THIS IS HER De ZADIG & VOLTAIRE Ámbar Vainilla — Dama" }
-            ];
-
-            // Agregar las opciones al select
-            essences.forEach(essence => {
-                const option = document.createElement('option');
-                option.value = essence.value;
-                option.textContent = essence.text;
-                essenceSearch.appendChild(option);
-            });
-        }
-
-        // Cargar las opciones cuando el documento esté listo
-        document.addEventListener('DOMContentLoaded', loadEssenceOptions);
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i> Modo Claro';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i> Modo Oscuro';
+                localStorage.setItem('theme', 'light');
+            }
+        });
     </script>
 </body>
 </html>
+
